@@ -9,25 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.down = exports.up = void 0;
-function up(knex) {
+exports.seed = void 0;
+function seed(knex) {
     return __awaiter(this, void 0, void 0, function* () {
-        return knex.schema.createTable('users', (table) => {
-            table.increments('_id').primary();
-            table.dateTime('_created_at').notNullable().defaultTo(knex.fn.now());
-            table.dateTime('_modified_at').notNullable().defaultTo(knex.fn.now());
-            table.dateTime('_deleted_at');
-            table.string('first_name').notNullable();
-            table.string('last_name').notNullable();
-            table.string('email').notNullable().unique();
-            table.string('role').notNullable();
-        });
+        // Deletes ALL existing entries
+        yield knex("events").del();
+        // Inserts seed entries
+        yield knex("events").insert([
+            { fk_user__id: 1, title: 'Time Off Request', description: 'I want to take a day off', start: '2023-11-22 11:57:08', end: '2023-11-22 11:57:08' },
+            { fk_user__id: 1, title: 'Time Off Request', description: 'Doctors Appointment', start: '2023-11-12 11:57:08', end: '2023-11-22 11:57:08' },
+            { fk_user__id: 1, title: 'Time Off Request', description: 'Continuing Education', start: '2023-11-02 11:57:08', end: '2023-11-22 11:57:08' },
+        ]);
     });
 }
-exports.up = up;
-function down(knex) {
-    return __awaiter(this, void 0, void 0, function* () {
-        knex.schema.dropTable('users');
-    });
-}
-exports.down = down;
+exports.seed = seed;
+;

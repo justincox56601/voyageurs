@@ -12,22 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.down = exports.up = void 0;
 function up(knex) {
     return __awaiter(this, void 0, void 0, function* () {
-        return knex.schema.createTable('users', (table) => {
+        return knex.schema.createTable('time_off_requests', (table) => {
             table.increments('_id').primary();
             table.dateTime('_created_at').notNullable().defaultTo(knex.fn.now());
             table.dateTime('_modified_at').notNullable().defaultTo(knex.fn.now());
             table.dateTime('_deleted_at');
-            table.string('first_name').notNullable();
-            table.string('last_name').notNullable();
-            table.string('email').notNullable().unique();
-            table.string('role').notNullable();
+            table.integer('fk_user__id').notNullable().unsigned();
+            table.integer('fk_event__id').notNullable().unsigned();
+            table.tinyint('is_approved').notNullable().defaultTo(0);
+            table.foreign('fk_user__id').references('users._id');
+            table.foreign('fk_event__id').references('events._id');
         });
     });
 }
 exports.up = up;
 function down(knex) {
     return __awaiter(this, void 0, void 0, function* () {
-        knex.schema.dropTable('users');
+        knex.schema.dropTable('time_off_requests');
     });
 }
 exports.down = down;
