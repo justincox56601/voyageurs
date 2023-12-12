@@ -6,4 +6,4 @@ dotenv.config({path: '../.env'});
 
 const environment: string | undefined = process.env.ENVIRONMENT || 'development';
 
-export const db: Knex = knex(config[environment])
+export const KnexService: Knex = knex(config[environment])

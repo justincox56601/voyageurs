@@ -1,3 +1,2 @@
-export * from './object.model';
-export * from './role.model';
-export * from './user.model';
+export * from './object-response.model';
+export * from './api-response.model';
